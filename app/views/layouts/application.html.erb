@@ -11,6 +11,15 @@
   </head>
 
   <body>
+    <% if user_signed_in? %>
+      <%= link_to "ユーザー", user_path(current_user)%> #追記
+
+      <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete } %>
+    <% else %>
+      <%= link_to 'ログイン', new_user_session_path %>
+      <%= link_to 'サインアップ', new_user_registration_path %>
+    <% end %>
+    <p class="notice"><%= notice %></p>
     <%= yield %>
   </body>
 </html>
