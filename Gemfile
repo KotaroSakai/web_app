@@ -73,3 +73,5 @@ end
 
 gem 'bootstrap'
 gem 'devise'
+gem 'jquery-rails'
+gem 'font-awesome-sass'
