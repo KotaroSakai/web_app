@@ -1,0 +1,10 @@
+<% posts.each do |post| %>
+  <tr>
+    <td><p class="card-text"><%= post.title %></p></td>
+    <td><p class="card-text"><small><%= simple_format post.content %></small></p></td>
+    <td>
+        <p>[Edit]</p>
+        <p>[Delete]</p>
+      </td>
+  </tr>
+<% end %>
