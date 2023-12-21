@@ -1,0 +1,4 @@
+<% @tobacco.each do |tobacco| %>
+	<td><p class="card-text"><%= tobacco.price %></p></td>
+  <td><p class="card-text"><small><%= simple_format tobacco.baseline_cigarette %></small></p></td>
+<% end %>
