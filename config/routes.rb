@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :smoke_records, only: [:new, :create, :edit]
+  resources :smoke_records, only: [:index, :new, :create, :edit, :show, :destroy]
   resources :tobaccos
   resources :posts
   devise_for :users

@@ -1,0 +1,26 @@
+<h1>喫煙記録一覧</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>日付</th>
+      <th>喫煙数</th>
+      <!-- 他のカラム -->
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @smoke_records.each do |smoke_record| %>
+      <tr>
+        <td><%= smoke_record.smoked %></td>
+        <td><%= smoke_record.smoke_date %></td>
+        <!-- 他のカラム -->
+        <td><%= link_to '詳細', smoke_record %></td>
+        <td><%= link_to '編集', edit_smoke_record_path(smoke_record) %></td>
+        <td><%= link_to '削除', smoke_record, data: { turbo_method: :delete } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to '新規記録作成', new_smoke_record_path %>
