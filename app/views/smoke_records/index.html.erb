@@ -23,4 +23,37 @@
   </tbody>
 </table>
 
-<%= link_to '新規記録作成', new_smoke_record_path %>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  記録
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">喫煙記録</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with model: @smoke_record, url: smoke_records_path, local: true do |f| %>
+					<div class="form-group">
+						<%= f.label :smoke_date %>
+						<%= f.date_field :smoke_date, value: Date.today %>
+					</div>
+
+					<div class="form-group">
+						<%= f.label :smoked %>
+						<%= f.number_field :smoked, class: "form-control" %>
+					</div>
+      
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+						<%= f.submit "記録する", class: "btn btn-primary" %>
+					</div>
+				<% end %>
+			</div>
+    </div>
+  </div>
+</div>

@@ -19,10 +19,13 @@
 							<% end %>
 						</li>
 						<li>
-							<%= link_to "喫煙数入力", new_smoke_record_path(current_user), class: "nav-link text-light" %>
+							<%= link_to "喫煙記録", smoke_records_path, class: "nav-link text-light" %>
 						</li>
 						<li>
 							<%= link_to "Myタバコ", tobacco_path(current_user), class: "nav-link text-light" %>
+						</li>
+						<li>
+							<%= link_to "反省文", posts_path, class: "nav-link text-light" %>
 						</li>
 					<% else %>
 						<li>

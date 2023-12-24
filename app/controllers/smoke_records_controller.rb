@@ -1,8 +1,9 @@
 class SmokeRecordsController < ApplicationController
-  before_action :set_smoke_record, only: [:show, :edit, :update, :destroy, :show]
+  before_action :set_smoke_record, only: [:show, :edit, :update, :destroy]
 
   def index
-    @smoke_records = current_user.smoke_records.all
+    @smoke_records = current_user.smoke_records
+    @smoke_record = SmokeRecord.new
   end
 
   def new
@@ -13,7 +14,7 @@ class SmokeRecordsController < ApplicationController
     @smoke_record = current_user.smoke_records.build(smoke_record_params)
 
     if @smoke_record.save
-      redirect_to root_path, notice: "記録しました"
+      redirect_to smoke_records_path, notice: "記録しました"
     else
       flash[:alert] = "記録できませんでした"
       render :new
