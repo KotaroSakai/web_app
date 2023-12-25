@@ -4,6 +4,8 @@ class SmokeRecordsController < ApplicationController
   def index
     @smoke_records = current_user.smoke_records
     @smoke_record = SmokeRecord.new
+
+    @smoke_count_date = @smoke_records.group_by_day(:smoke_date).count
   end
 
   def new
