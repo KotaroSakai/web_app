@@ -6,8 +6,14 @@ class PostsController < ApplicationController
   end
 
   def create
-    current_user.posts.build(post_params)
-    @posts = Post.all
+    @post = current_user.posts.build(post_params)
+
+    if @post.save
+      redirect_to posts_path, notice: "反省しました"
+    else
+      flash[:alert] = "反省できませんでした"
+      render :new
+    end
   end
 
   def edit

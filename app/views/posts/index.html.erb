@@ -1,26 +1,24 @@
-<h1>Posts#index</h1>
-<div class="col-9">
-  <h2>Post</h2>
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-striped">
-        <thead class="thead-light">
-          <tr>
-            <th>title</th>
-            <th>content</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-  </div>
-	<div class="col-9 posts">
-		<%= render "posts", posts: @posts %>
-	</div>
-</div>
+<h1>反省文</h1>
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   投稿
 </button>
+
+<div class="col-9">
+	<div class="row">
+    <div class="col-12">
+      <div class="row">
+        <% if @posts.present? %>
+          <%= render "post", posts: @posts %>
+        <% else %>
+          <p>投稿がありません</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+		
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -31,7 +29,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-				<%= form_with model: @post, remote: true do |f| %>
+				<%= form_with model: @post, local: true do |f| %>
 					<div class="modal-body">
 						<div class="form-group">
 							<%= f.label :title %>
