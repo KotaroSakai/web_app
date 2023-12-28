@@ -15,7 +15,6 @@
         <td><%= smoke_record.smoked %></td>
         <td><%= smoke_record.smoke_date %></td>
         <!-- 他のカラム -->
-        <td><%= link_to '詳細', smoke_record %></td>
         <td><%= link_to '編集', edit_smoke_record_path(smoke_record) %></td>
         <td><%= link_to '削除', smoke_record, data: { turbo_method: :delete } %></td>
       </tr>
@@ -23,7 +22,7 @@
   </tbody>
 </table>
 
-<%= line_chart @smoke_count_date, height: "400px" %>
+<%= line_chart @smoke_count_date %>
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
