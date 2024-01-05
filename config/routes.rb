@@ -13,4 +13,6 @@ Rails.application.routes.draw do
 
   root "top#index"
   resources :users
+
+  post "callback" => "line_bot#callback"
 end
