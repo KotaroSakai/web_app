@@ -1,0 +1,2 @@
+module SmokeRecordsHelper
+end

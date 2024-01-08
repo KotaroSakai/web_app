@@ -1,0 +1,15 @@
+<h1>禁煙前喫煙数</h1>
+<%= form_with model: @tobacco, local: true do |f|%>
+	<p>
+		<%= f.label :price %>
+		<%= f.text_field :price, class: "form-control" %>
+	</p>
+	<p>
+		<%= f.label :baseline_cigarette %>
+		<%= f.text_field :baseline_cigarette, class: "form-control" %>
+	</p>
+	<p>
+		<%= f.submit "保存", class: "btn btn-primary" %>
+	</p>
+<% end %>
+
