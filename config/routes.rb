@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :posts do
     resources :likes, only: [:create, :destroy]
   end
+  resources :send_sets, only: [:new, :create, :show, :edit, :update]
 
   devise_for :users, controllers: {
     omniauth_callbacks: "omniauth_callbacks"

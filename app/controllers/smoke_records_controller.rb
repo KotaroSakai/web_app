@@ -5,10 +5,13 @@ class SmokeRecordsController < ApplicationController
     @smoke_records = current_user.smoke_records
     @smoke_record = SmokeRecord.new
 
-    @total_smoked = current_user.smoke_records.sum(:smoked)
-    @cost = calculate_cost(@total_smoked)
+    if @smoke_records.presence && current_user.tobacco.presence
+      @total_smoked = current_user.smoke_records.sum(:smoked)
+      @cost = calculate_cost(@total_smoked)
+      @smoke_count_date = @smoke_records.group_by_day(:smoke_date).count
+    end
 
-    @smoke_count_date = @smoke_records.group_by_day(:smoke_date).count
+    
   end
 
   def new
