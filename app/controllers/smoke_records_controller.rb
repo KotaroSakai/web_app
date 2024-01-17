@@ -5,6 +5,8 @@ class SmokeRecordsController < ApplicationController
     @smoke_records = current_user.smoke_records
     @smoke_record = SmokeRecord.new
 
+    
+
     if @smoke_records.presence && current_user.tobacco.presence
       @total_smoked = current_user.smoke_records.sum(:smoked)
       @cost = calculate_cost(@total_smoked)

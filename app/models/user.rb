@@ -1,9 +1,17 @@
+require 'bcrypt'
+
 class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :smoke_records, dependent: :destroy
   has_one :tobacco, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_one :send_set, dependent: :destroy
+
+  has_many :follows, class_name: "UserPartner", foreign_key: :followed_id
+  has_many :followers, class_name: "UserPartner", foreign_key: :follower_id
+  
+
+  before_save :update_invitation_token
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -31,4 +39,25 @@ class User < ApplicationRecord
     self.raw_info = raw_info.to_json
     self.save!
   end
+
+  def self.find_by_token(input_token)
+    find_by(token: input_token)
+  end
+
+  def following?(user)
+    follows.find_by(followed_id: user.id).present?
+  end
+
+  private
+
+  def update_invitation_token
+    self.token = generate_unique_token
+  end
+
+  def generate_unique_token
+    SecureRandom.uuid
+  end
+
+
+  
 end

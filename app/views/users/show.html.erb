@@ -9,6 +9,30 @@
     <strong>e-mail</strong>
     <%= @user.email %>
 </p>
+<p>
+    
+</p>
+
+<!-- app/views/users/show.html.erb などのビューファイル -->
+<div class="invitation-code-display">
+  <input class="form-control" id="copyTarget" type="text" value="<%= current_user.token %>" readonly>
+  <i class="btn btn-outline-secondary far fa-copy copy-btn" type="button" onclick="copyToClipboard()"></i>
+</div>
+
+<script>
+  function copyToClipboard() {
+    var copyTarget = document.getElementById("copyTarget");
+    copyTarget.select();
+    document.execCommand("Copy");
+    alert('コピーしました');
+  }
+</script>
+
+<div class="container">
+  <p>こちらの招待コードをパートナーの方の招待コード入力欄に入力してください。</p>
+</div>
+
 
 <%= link_to "Myタバコ登録", new_tobacco_path %>
 <%= link_to "通知設定", send_set_path %>
+<%= link_to "パートナー", enter_token_user_path %>

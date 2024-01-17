@@ -16,7 +16,12 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   root "top#index"
-  resources :users
+  resources :users do
+    member do
+      get :enter_token
+      post :validata_token
+    end
+  end
 
   post "callback" => "line_bot#callback"
 end
