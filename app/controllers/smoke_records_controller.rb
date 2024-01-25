@@ -10,7 +10,7 @@ class SmokeRecordsController < ApplicationController
     if @smoke_records.presence && current_user.tobacco.presence
       @total_smoked = current_user.smoke_records.sum(:smoked)
       @cost = calculate_cost(@total_smoked)
-      @smoke_count_date = @smoke_records.group_by_day(:smoke_date).count
+      #@smoke_count_date = @smoke_records.group_by_day(:smoke_date).count
     end
 
     
@@ -24,7 +24,7 @@ class SmokeRecordsController < ApplicationController
     @smoke_record = current_user.smoke_records.build(smoke_record_params)
 
     if @smoke_record.save
-      redirect_to smoke_records_path, notice: "記録しました"
+      redirect_to smoke_records_path, success: "記録しました"
     else
       render :new
       flash[:alert] = "記録できませんでした"
@@ -39,7 +39,7 @@ class SmokeRecordsController < ApplicationController
 
   def destroy
     @smoke_record.destroy
-    redirect_to smoke_records_path, notice: "喫煙記録を削除しました"
+    redirect_to smoke_records_path, danger: "喫煙記録を削除しました"
   end
 
 

@@ -25,7 +25,7 @@
 <h2>喫煙総数: <%= @total_smoked %> 本</h2>
 <h2>喫煙総額: <%= @cost %> 円</h2>
 
-<%= line_chart @smoke_count_date %>
+<%= pie_chart SmokeRecord.group(:smoked).count %>
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">

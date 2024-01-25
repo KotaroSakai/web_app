@@ -25,7 +25,7 @@ class SendSetsController < ApplicationController
 
 	def update
 		if @send_set.update(send_set_params)
-			redirect_to @send_set, notice: "設定を更新しました"
+			redirect_to @send_set, success: "設定を更新しました"
 		else
 			render :edit
 		end
@@ -38,6 +38,8 @@ class SendSetsController < ApplicationController
 	end
 
 	def send_set_params
-		params.require(:send_set).permit(:set_time, :send_active)
+		send_active_value = ActiveRecord::Type::Boolean.new.cast(params[:send_set][:send_active])
+		puts "send_active_value: #{send_active_value.inspect}"
+		params.require(:send_set).permit(:set_time, :send_active).merge(send_active: send_active_value)
 	end
 end

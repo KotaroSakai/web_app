@@ -10,8 +10,16 @@
     <%= @user.email %>
 </p>
 <p>
-    
+    <strong>パートナー</strong>
+    <% @user_partner.each do |partner| %>
+      <% user = partner.follower %>
+      <%= user.name %>
+    <% end %>
 </p>
+
+<div class="container">
+  <p>こちらの招待コードをパートナーの方の招待コード入力欄に入力してください。</p>
+</div>
 
 <!-- app/views/users/show.html.erb などのビューファイル -->
 <div class="invitation-code-display">
@@ -28,9 +36,7 @@
   }
 </script>
 
-<div class="container">
-  <p>こちらの招待コードをパートナーの方の招待コード入力欄に入力してください。</p>
-</div>
+
 
 
 <%= link_to "Myタバコ登録", new_tobacco_path %>

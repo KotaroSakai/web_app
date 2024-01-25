@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_15_135737) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_23_100656) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -35,7 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_15_135737) do
   create_table "send_sets", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.time "set_time", default: "2000-01-01 09:00:00"
-    t.boolean "send_active", default: false
+    t.boolean "send_active", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_send_sets_on_user_id"
@@ -64,6 +64,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_15_135737) do
     t.integer "followed_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["follower_id", "followed_id"], name: "index_user_partners_on_follower_id_and_followed_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|

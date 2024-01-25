@@ -44,8 +44,8 @@ class User < ApplicationRecord
     find_by(token: input_token)
   end
 
-  def following?(user)
-    follows.find_by(followed_id: user.id).present?
+  def following?(other_user)
+    follows.find_by(followed_id: other_user.id).present?
   end
 
   private
