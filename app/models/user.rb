@@ -1,6 +1,7 @@
 require 'bcrypt'
 
 class User < ApplicationRecord
+  enum role: { smoker: 0, partner: 1}
   has_many :posts, dependent: :destroy
   has_many :smoke_records, dependent: :destroy
   has_one :tobacco, dependent: :destroy
@@ -9,7 +10,7 @@ class User < ApplicationRecord
 
   has_many :follows, class_name: "UserPartner", foreign_key: :followed_id
   has_many :followers, class_name: "UserPartner", foreign_key: :follower_id
-  
+
 
   before_save :update_invitation_token
 
