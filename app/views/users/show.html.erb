@@ -1,14 +1,9 @@
-<h1>Users#show</h1>
-<hr />
-
+<h1 class="app-page-title">ユーザー</h1>
 <p>
     <strong>ユーザー名</strong>
     <%= @user.name %>
 </p>
-<p>
-    <strong>e-mail</strong>
-    <%= @user.email %>
-</p>
+
 <p>
     <strong>パートナー</strong>
     <% @user_partner.each do |partner| %>
@@ -16,6 +11,85 @@
       <%= user.name %>
     <% end %>
 </p>
+
+<div class="row g-4 mb-4">
+  <div class="col-6 col-lg-3">
+    <div class="app-card app-card-stat shadow-sm h-100">
+      <div class="app-card-body p-3 p-lg-4">
+        <h4 class="stats-type mb-1"> </h4>
+        <div class="stats-figure">グラフ</div>
+        <div class="stats-meta"> </div>
+      </div><!--//app-card-body-->
+      <a class="app-card-link-mask" href=""></a>
+    </div><!--//app-card-->
+  </div><!--//col-->
+
+  <div class="col-6 col-lg-3">
+    <div class="app-card app-card-stat shadow-sm h-100">
+      <div class="app-card-body p-3 p-lg-4">
+        <h4 class="stats-type mb-1">喫煙数入力</h4>
+        <div class="stats-figure">喫煙数入力</div>
+        <div class="stats-meta"></div>
+      </div><!--//app-card-body-->
+      <a class="app-card-link-mask" href="<%= smoke_records_path %>"></a>
+    </div><!--//app-card-->
+  </div><!--//col-->
+
+  <div class="col-6 col-lg-3">
+    <div class="app-card app-card-stat shadow-sm h-100">
+      <div class="app-card-body p-3 p-lg-4">
+        <h4 class="stats-type mb-1">通知設定</h4>
+        <div class="stats-figure">
+          <%= @user.send_set.send_active %>
+        </div>
+        <div class="stats-meta">通知時間: <%= @user.send_set.set_time %></div>
+      </div><!--//app-card-body-->
+      <a class="app-card-link-mask" href="<%= send_set_path %>"></a>
+    </div><!--//app-card-->
+  </div><!--//col-->
+
+  <div class="col-6 col-lg-3">
+    <div class="app-card app-card-stat shadow-sm h-100">
+      <div class="app-card-body p-3 p-lg-4">
+        <h4 class="stats-type mb-1">反省文</h4>
+        <div class="stats-figure">みんなの反省文</div>
+        <div class="stats-meta"></div>
+      </div><!--//app-card-body-->
+      <a class="app-card-link-mask" href="<%= posts_path %>"></a>
+    </div><!--//app-card-->
+  </div><!--//col-->
+</div>
+
+<div class="row g-4 mb-4">
+	<div class="col-12 col-lg-4">
+		<div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
+			<div class="app-card-header p-3 border-bottom-0">
+				<div class="row align-items-center gx-3">
+          <div class="col-auto">
+						<h4 class="app-card-title">パートナー登録</h4>
+					</div><!--//col-->
+				</div><!--//row-->
+			</div><!--//app-card-header-->
+      <div class="app-card-body px-4">
+        <% if @user_partner %>
+          <div class="intro">
+            <% @user_partner.each do |partner| %>
+              <% user = partner.follower %>
+              <h4 class="stats-type mb-1">パートナー: <%= user.name %></h4>
+            <% end %>
+        <% else%>
+          <div class="intro">パートナーになりたい相手の招待コードを教えてもらってください</div>
+        <% end %>
+			</div><!--//app-card-body-->
+			<div class="app-card-footer p-4 mt-auto">
+      <% if @user_partner.blank? %>
+				<a class="btn app-btn-secondary" href="<%= enter_token_user_path %>">登録する</a>
+      <% end %>
+			</div><!--//app-card-footer-->
+		</div><!--//app-card-->
+	</div><!--//col-->
+</div>
+
 
 <div class="container">
   <p>こちらの招待コードをパートナーの方の招待コード入力欄に入力してください。</p>
@@ -40,5 +114,34 @@
 
 
 <%= link_to "Myタバコ登録", new_tobacco_path %>
-<%= link_to "通知設定", send_set_path %>
-<%= link_to "パートナー", enter_token_user_path %>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">喫煙記録</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with model: @smoke_record, url: smoke_records_path, local: true do |f| %>
+					<div class="form-group">
+						<%= f.label :smoke_date %>
+						<%= f.date_field :smoke_date, value: Date.today %>
+					</div>
+
+					<div class="form-group">
+						<%= f.label :smoked %>
+						<%= f.number_field :smoked, class: "form-control" %>
+					</div>
+      
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+						<%= f.submit "記録する", class: "btn btn-primary" %>
+					</div>
+				<% end %>
+			</div>
+    </div>
+  </div>
+</div>

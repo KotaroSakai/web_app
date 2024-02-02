@@ -11,4 +11,5 @@ import "controllers"
 import { createPopper } from '@popperjs/core';
 import "bootstrap"
 
-
+import "chartkick"
+import "Chart.bundle"

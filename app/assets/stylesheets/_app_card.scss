@@ -1,0 +1,103 @@
+$theme-color-primary: #15a362;
+
+$theme-text-color-primary: #252930;
+$theme-text-color-secondary: lighten($theme-text-color-primary, 25%);
+$theme-text-color-light: lighten($theme-text-color-primary, 40%);
+$theme-bg-light: #f5f6fe;
+$theme-border-color: lighten($theme-text-color-primary, 75%);
+$theme-color-new: #5ab66e;
+$theme-color-count: #EC776C;
+$theme-error: #EC575B;
+$smoky-white: #f5f5f5;
+
+$theme-success-color: #5cb377;
+$theme-warning-color: #EEBF41;
+$theme-info-color: #5b99ea;
+$theme-danger-color: #d26d69;
+
+
+$theme-color-pdf: #DA2D27;
+$theme-color-word: #66a0fd;
+$theme-color-ppt: #f4b400;
+$theme-color-excel: #0da95f;
+$theme-color-video: #935dc1;
+$theme-color-zip: #252930;
+
+/*************************** Variables Section. *****************************/
+// Create variables to override the default value for variables used in the Bootstrap SCSS files.
+
+
+$theme-colors: (
+  "primary":  $theme-color-primary, 
+  "secondary": $theme-text-color-secondary, 
+  "success": $theme-success-color,
+  "danger": $theme-danger-color,
+  "warning": $theme-warning-color,
+  "info": $theme-info-color,
+);
+
+.app-card {
+	position: relative;
+	background: #fff;
+	
+	
+	
+	&.border-left-decoration {
+		border-left: 3px solid $theme-color-primary;
+	}
+
+	.app-card-link-mask {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		display: block;
+		left: 0;
+		top: 0;
+	}
+	
+	.app-card-header {
+		border-bottom: 1px solid $theme-border-color;
+	}
+	
+	.app-card-title {
+		font-size: 1.125rem;
+		margin-bottom: 0;
+	}
+	
+	.card-header-action {
+		font-size: 0.875rem;		
+		a:hover {
+			text-decoration: underline;
+		}
+		
+	}
+	
+	.form-select-holder {
+		display: inline-block;
+	}
+	
+	
+	
+}
+
+.app-card-stat {
+	text-align: center;
+	.stats-type {
+		font-size: 0.875rem;
+		color: $theme-text-color-light;
+		text-transform: uppercase;		
+	}
+	
+	.stats-figure {
+	    font-size: 2rem;
+	    color: $theme-text-color-primary;
+	}
+	
+	.stats-meta {
+		font-size: 0.875rem;
+		color: $theme-text-color-light;
+		
+	}
+	
+}
+

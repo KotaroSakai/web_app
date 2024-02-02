@@ -5,6 +5,8 @@ class SmokeRecordsController < ApplicationController
     @smoke_records = current_user.smoke_records
     @smoke_record = SmokeRecord.new
 
+    @data = SmokeRecord.group_by_day(:smoke_date, time_zone: 'Tokyo').sum(:smoked)
+
     
 
     if @smoke_records.presence && current_user.tobacco.presence

@@ -14,6 +14,8 @@ class User < ApplicationRecord
 
   before_save :update_invitation_token
 
+  after_create :create_send_set
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -57,6 +59,13 @@ class User < ApplicationRecord
 
   def generate_unique_token
     SecureRandom.uuid
+  end
+
+  def create_send_set
+    self.create_send_set(
+      send_active: false,
+      set_time: Time.current.change(hour: 9, min: 0, sec: 0)
+    )
   end
 
 
