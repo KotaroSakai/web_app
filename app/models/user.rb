@@ -61,13 +61,11 @@ class User < ApplicationRecord
     SecureRandom.uuid
   end
 
-  def create_send_set
+  def create_send_set #通知時間作成
     self.create_send_set(
       send_active: false,
       set_time: Time.current.change(hour: 9, min: 0, sec: 0)
     )
   end
-
-
   
 end
