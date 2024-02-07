@@ -47,11 +47,6 @@ class SmokeRecordsController < ApplicationController
     redirect_to smoke_records_path, danger: "喫煙記録を削除しました"
   end
 
-  def compare_smoking
-    @savings = savings(params[:duration])
-    # 他の処理（例: グラフのデータ取得など）も追加することができます
-  end
-
 
   private
 

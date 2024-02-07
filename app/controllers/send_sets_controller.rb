@@ -25,7 +25,7 @@ class SendSetsController < ApplicationController
 
 	def update
 		if @send_set.update(send_set_params)
-			redirect_to @send_set, success: "設定を更新しました"
+			redirect_to user_path(current_user), success: "設定を更新しました"
 		else
 			render :edit
 		end

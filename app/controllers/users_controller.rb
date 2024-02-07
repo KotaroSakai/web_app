@@ -1,7 +1,10 @@
 class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
-    @user_partner = UserPartner.where(followed_id: @user.id)
+    @user_partner = @user.follows
+
+    @smoke_record = SmokeRecord.new
+    @send_set = current_user.send_set
   end
 
   def enter_token
