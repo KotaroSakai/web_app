@@ -16,12 +16,15 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   root "top#index"
+  get "privacy_policy", to: "top#privacy_policy"
+  get "terms", to: "top#terms"
   resources :users do
     member do
       get :enter_token
       post :validata_token
     end
   end
+
 
   post "callback" => "line_bot#callback"
 end

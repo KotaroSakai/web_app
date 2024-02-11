@@ -13,9 +13,16 @@ class SmokeRecordsController < ApplicationController
       duration = params[:duration]
       @total_smoked = calculate_total_smoked(duration)
       @cost = calculate_cost(@total_smoked)
-      @data = SmokeRecord.group_by_day(:smoke_date, time_zone: 'Tokyo').sum(:smoked)
       @saved_cost = savings(duration)
       @saved_life = life_calculation(duration)
+      @data = case duration
+      when "7"
+        current_user.smoke_records.group_by_week(:smoke_date, time_zone: 'Tokyo').sum(:smoked)
+      when '30'
+        current_user.smoke_records.group_by_month(:smoke_date, time_zone: 'Tokyo').sum(:smoked)
+      else
+        current_user.smoke_records.group_by_day(:smoke_date, time_zone: 'Tokyo').sum(:smoked)
+      end
     end
 
     
