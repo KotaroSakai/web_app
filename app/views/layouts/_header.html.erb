@@ -1,7 +1,7 @@
 <header class="sticky-top">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container">
-			<%= link_to "禁煙アプリ", root_path, class: "navbar-brand"%>
+			<%= link_to "SmokeDate", root_path, class: "navbar-brand"%>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
   			<span class="navbar-toggler-icon"></span>
 			</button>
@@ -14,18 +14,12 @@
 							<% end %>
 						</li>
 						<li>
+							<%= link_to "反省文", posts_path, class: "nav-link text-light" %>
+						</li>
+						<li>
 							<%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link text-light" do %>
 								<i class="fas fa-sign-out-alt"></i> ログアウト
 							<% end %>
-						</li>
-						<li>
-							<%= link_to "喫煙記録", smoke_records_path, class: "nav-link text-light" %>
-						</li>
-						<li>
-							<%= link_to "Myタバコ", tobacco_path(current_user), class: "nav-link text-light" %>
-						</li>
-						<li>
-							<%= link_to "反省文", posts_path, class: "nav-link text-light" %>
 						</li>
 					<% else %>
 						<li>

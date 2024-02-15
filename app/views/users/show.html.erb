@@ -1,95 +1,90 @@
-<h1 class="app-page-title">ユーザー</h1>
+<h2 class="app-page-title">ユーザー</h2>
 <p>
     <strong>ユーザー名</strong>
     <%= @user.name %>
 </p>
 
-<p>
-    <strong>パートナー</strong>
-    <% @user_partner.each do |partner| %>
-      <% user = partner.follower %>
-      <%= user.name %>
-    <% end %>
-</p>
+
 
 <div class="row g-4 mb-4">
   <div class="col-6 col-lg-3">
-    <div class="app-card app-card-stat shadow-sm h-100">
+    <div class="app-card app-card-m shadow-sm h-100">
       <div class="app-card-body p-3 p-lg-4">
-        <h4 class="stats-type mb-1"> </h4>
-        <div class="stats-figure">グラフ</div>
+        <h4 class="app-card-titlemb-1">グラフ・計算</h4>
         <div class="stats-meta"> </div>
       </div><!--//app-card-body-->
-      <a class="app-card-link-mask" href="<%= smoke_records_path %>"></a>
+    <a class="app-card-link" href="<%= smoke_records_path %>"></a>
     </div><!--//app-card-->
   </div><!--//col-->
 
   <div class="col-6 col-lg-3">
-    <div class="app-card app-card-stat shadow-sm h-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <div class="app-card app-card-m shadow-sm h-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
       <div class="app-card-body p-3 p-lg-4">
-        <h4 class="stats-type mb-1">喫煙数入力</h4>
-        <div class="stats-figure">喫煙数入力</div>
+        <h4 class="app-card-title mb-1">喫煙数入力</h4>
         <div class="stats-meta"></div>
       </div><!--//app-card-body-->
-      <a class="app-card-link-mask" href="#"></a>
+      <a class="app-card-link" href="#"></a>
     </div><!--//app-card-->
   </div><!--//col-->
 
   <div class="col-6 col-lg-3">
-    <div class="app-card app-card-stat shadow-sm h-100" data-bs-toggle="modal" data-bs-target="#SendSetModal">
+    <div class="app-card app-card-m shadow-sm h-100" data-bs-toggle="modal" data-bs-target="#SendSetModal">
       <div class="app-card-body p-3 p-lg-4">
-        <h4 class="stats-type mb-1">通知設定</h4>
+        <h4 class="app-card-title mb-1">通知設定</h4>
         <div class="stats-figure">
           <%= @user.send_set.send_active %>
         </div>
         <div class="stats-meta">通知時間: <%= @user.send_set.set_time.strftime('%H時%M分') %></div>
       </div><!--//app-card-body-->
-      <a class="app-card-link-mask" href="#"></a>
+      <a class="app-card-link" href="#"></a>
     </div><!--//app-card-->
   </div><!--//col-->
 
   <div class="col-6 col-lg-3">
-    <div class="app-card app-card-stat shadow-sm h-100">
+    <div class="app-card app-card-m shadow-sm h-100">
       <div class="app-card-body p-3 p-lg-4">
-        <h4 class="stats-type mb-1">反省文</h4>
-        <div class="stats-figure">みんなの反省文</div>
+        <h4 class="app-card-title mb-1">反省文</h4>
         <div class="stats-meta"></div>
       </div><!--//app-card-body-->
-      <a class="app-card-link-mask" href="<%= posts_path %>"></a>
+      <a class="app-card-link" href="<%= posts_path %>"></a>
+    </div><!--//app-card-->
+  </div><!--//col-->
+
+  <div class="col-6 col-lg-3">
+    <div class="app-card shadow-sm h-100">
+      <div class="app-card-body p-3 p-lg-4">
+        <h4 class="app-card-title mb-1">パートナー</h4>
+        <div class="stats-meta">
+          <% if @user_partner.blank? %>
+            <a class="btn app-btn-secondary" href="<%= enter_token_user_path %>">登録する</a>
+          <% else%>
+            <% @user_partner.each do |partner| %>
+              <% user = partner.follower %>
+              <h5 class="stats-type mb-1">パートナー: <%= user.name %></h5>
+            <% end %>
+          <% end %>
+        </div>
+      </div><!--//app-card-body-->
+    </div><!--//app-card-->
+  </div><!--//col-->
+
+  <div class="col-6 col-lg-3">
+    <div class="app-card app-card-m shadow-sm h-100">
+      <div class="app-card-body p-3 p-lg-4">
+        <h4 class="app-card-title mb-1">Myタバコ</h4>
+        <div class="stats-meta">
+          <% if @user.tobacco.blank? %>
+            <a class="app-card-link" href="<%= new_tobacco_path %>"></a>
+          <% else %>
+            一箱: <%= @user.tobacco.price %>円 <br>
+            一日: <%= @user.tobacco.baseline_cigarette %>本
+            <a class="app-card-link" href="<%= edit_tobacco_path %>"></a>
+          <% end %>
+        </div>
+      </div><!--//app-card-body-->
     </div><!--//app-card-->
   </div><!--//col-->
 </div>
-
-<div class="row g-4 mb-4">
-	<div class="col-12 col-lg-4">
-		<div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
-			<div class="app-card-header p-3 border-bottom-0">
-				<div class="row align-items-center gx-3">
-          <div class="col-auto">
-						<h4 class="app-card-title">パートナー登録</h4>
-					</div><!--//col-->
-				</div><!--//row-->
-			</div><!--//app-card-header-->
-      <div class="app-card-body px-4">
-        <% if @user_partner %>
-          <div class="intro">
-            <% @user_partner.each do |partner| %>
-              <% user = partner.follower %>
-              <h4 class="stats-type mb-1">パートナー: <%= user.name %></h4>
-            <% end %>
-        <% else%>
-          <div class="intro">パートナーになりたい相手の招待コードを教えてもらってください</div>
-        <% end %>
-			</div><!--//app-card-body-->
-			<div class="app-card-footer p-4 mt-auto">
-      <% if @user_partner.blank? %>
-				<a class="btn app-btn-secondary" href="<%= enter_token_user_path %>">登録する</a>
-      <% end %>
-			</div><!--//app-card-footer-->
-		</div><!--//app-card-->
-	</div><!--//col-->
-</div>
-
 
 <div class="container">
   <p>こちらの招待コードをパートナーの方の招待コード入力欄に入力してください。</p>
@@ -110,10 +105,6 @@
   }
 </script>
 
-
-
-
-<%= link_to "Myタバコ登録", new_tobacco_path %>
 
 
 <!-- Modal -->

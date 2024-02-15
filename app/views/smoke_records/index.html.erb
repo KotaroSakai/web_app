@@ -1,4 +1,4 @@
-<h1>グラフ・計算</h1>
+<h2 class="app-page-title">グラフ・計算</h2>
 
 
 
@@ -18,13 +18,13 @@
               <strong class="d-inline-block mb-2 text-success">喫煙記録</strong>
               <h3 class="mb-0">
                   <%= form_tag(smoke_records_path, method: :get) do %>
-                    <%= label_tag 'duration', '期間：' %>
+                    <%= label_tag 'duration', '過去：' %>
                     <%= select_tag 'duration', options_for_select([['1週間', '7'], ['1ヶ月', '30'], ['全期間', 'all']], params[:duration]), include_blank: '選択してください' %>
                     <%= submit_tag '比較する' %>
                   <% end %>   
               </h3>
-              <h2>喫煙総数: <%= @total_smoked %> 本</h2>
-              <h2>喫煙総額: <%= @cost %> 円</h2>
+              <h2>喫煙数: <%= @total_smoked %> 本</h2>
+              <h2>喫煙額: <%= @cost %> 円</h2>
               <h2>節約金額: <%= @saved_cost %> 円</h2>
               <h2>伸びた寿命: <%= @saved_life %></h2>
             </div>

@@ -18,7 +18,7 @@ before_action :set_tabacco, only: [:show, :update, :destroy]
   end
 
   def edit
-    if current_user.tabacco.present?
+    if current_user.tobacco.present?
       set_tabacco
     else
       redirect_to new_tobacco_path
@@ -27,6 +27,11 @@ before_action :set_tabacco, only: [:show, :update, :destroy]
   end
 
   def update
+    if @tobacco.update(tobacco_params)
+      redirect_to user_path(current_user), success: "変更が完了しました"
+    else
+      render :edit
+    end
   end
 
   private
