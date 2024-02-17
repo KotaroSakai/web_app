@@ -8,8 +8,8 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_one :send_set, dependent: :destroy
 
-  has_many :follows, class_name: "UserPartner", foreign_key: :followed_id
-  has_many :followers, class_name: "UserPartner", foreign_key: :follower_id
+  has_many :follows, class_name: "UserPartner", foreign_key: :followed_id # コードを入力してもらうユーザー
+  has_many :followers, class_name: "UserPartner", foreign_key: :follower_id # コードを入力したユーザー
 
 
   before_save :update_invitation_token
@@ -49,6 +49,10 @@ class User < ApplicationRecord
 
   def following?(other_user)
     follows.find_by(followed_id: other_user.id).present?
+  end
+
+  def follower?(other_user)
+    followers.find_by(follower_id: other_user.id).present?
   end
 
   private

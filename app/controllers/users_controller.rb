@@ -30,9 +30,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def remove_partner
+    follower_id = params[:follower_id]
+    partner = User.find(follower_id)
+    byebug
+    UserPartner.find_by(follower_id: follower_id, followed_id: current_user.id).destroy
+    byebug
+    redirect_to user_path(current_user), success: "関係を解除しました"
+    
+  end
+
   private
   
   def user_params
-    params.require(:user).permit(:name, :email)
+    params.require(:user).permit(:name, :email, :role)
   end
 end

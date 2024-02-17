@@ -2,6 +2,8 @@
 <p>
     <strong>ユーザー名</strong>
     <%= @user.name %>
+    <strong>役割</strong>
+    <%= @user.role_i18n %>
 </p>
 
 
@@ -61,6 +63,7 @@
             <% @user_partner.each do |partner| %>
               <% user = partner.follower %>
               <h5 class="stats-type mb-1">パートナー: <%= user.name %></h5>
+              <%= link_to "削除", remove_partner_user_path(follower_id: user.id), data: { turbo_method: :delete }, class: "btn btn-danger btn-sm ms-2" %>
             <% end %>
           <% end %>
         </div>

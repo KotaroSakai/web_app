@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     member do
       get :enter_token
       post :validata_token
+      delete 'remove_partner'
     end
   end
 
