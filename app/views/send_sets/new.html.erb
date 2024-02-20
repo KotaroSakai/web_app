@@ -1,0 +1,15 @@
+<%= form_for(@send_set) do |f| %>
+  <div class="field">
+    <%= f.label :set_time %>
+    <%= f.time_field :set_time %>
+  </div>
+
+  <div class="field">
+    <%= f.label :send_active %>
+    <%= f.check_box :send_active %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Save" %>
+  </div>
+<% end %>

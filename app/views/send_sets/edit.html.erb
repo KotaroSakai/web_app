@@ -1,0 +1,15 @@
+<%= form_for(@send_set) do |f| %>
+  <div class="field">
+    <%= f.label :set_time %>
+    <%= f.time_field :set_time %>
+  </div>
+
+  <div class="field">
+    <%= f.label :send_active %>
+    <%= f.select :send_active, [["通知ON",true ],["通知OFF", false]], { include_blank: false, selected: true } %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Save" %>
+  </div>
+<% end %>

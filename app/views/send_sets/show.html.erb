@@ -1,0 +1,8 @@
+<% if @send_set.present? %>
+  <h2>通知設定: <%= @send_set.send_active %> </h2>
+  <h2>通知時間: <%= @send_set.set_time.strftime("%H:%M") %> </h2>
+	<%= link_to "設定変更", edit_send_set_path %>
+<% else %>
+  <p>通知設定が見つかりません</p>
+	<%= link_to "新規設定", new_send_set_path %>
+<% end %>

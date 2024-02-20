@@ -1,0 +1,170 @@
+<h2 class="app-page-title">ユーザー</h2>
+<p>
+    <strong>ユーザー名</strong>
+    <%= @user.name %>
+    <strong>役割</strong>
+    <%= @user.role_i18n %>
+</p>
+
+
+
+<div class="row g-4 mb-4">
+  <div class="col-6 col-lg-3">
+    <div class="app-card app-card-m shadow-sm h-100">
+      <div class="app-card-body p-3 p-lg-4">
+        <h4 class="app-card-titlemb-1">グラフ・計算</h4>
+        <div class="stats-meta"> </div>
+      </div><!--//app-card-body-->
+    <a class="app-card-link" href="<%= smoke_records_path %>"></a>
+    </div><!--//app-card-->
+  </div><!--//col-->
+
+  <div class="col-6 col-lg-3">
+    <div class="app-card app-card-m shadow-sm h-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <div class="app-card-body p-3 p-lg-4">
+        <h4 class="app-card-title mb-1">喫煙数入力</h4>
+        <div class="stats-meta"></div>
+      </div><!--//app-card-body-->
+      <a class="app-card-link" href="#"></a>
+    </div><!--//app-card-->
+  </div><!--//col-->
+
+  <div class="col-6 col-lg-3">
+    <div class="app-card app-card-m shadow-sm h-100" data-bs-toggle="modal" data-bs-target="#SendSetModal">
+      <div class="app-card-body p-3 p-lg-4">
+        <h4 class="app-card-title mb-1">通知設定</h4>
+        <div class="stats-figure">
+          <%= @user.send_set.send_active %>
+        </div>
+        <div class="stats-meta">通知時間: <%= @user.send_set.set_time.strftime('%H時%M分') %></div>
+      </div><!--//app-card-body-->
+      <a class="app-card-link" href="#"></a>
+    </div><!--//app-card-->
+  </div><!--//col-->
+
+  <div class="col-6 col-lg-3">
+    <div class="app-card app-card-m shadow-sm h-100">
+      <div class="app-card-body p-3 p-lg-4">
+        <h4 class="app-card-title mb-1">反省文</h4>
+        <div class="stats-meta"></div>
+      </div><!--//app-card-body-->
+      <a class="app-card-link" href="<%= posts_path %>"></a>
+    </div><!--//app-card-->
+  </div><!--//col-->
+
+  <div class="col-6 col-lg-3">
+    <div class="app-card shadow-sm h-100">
+      <div class="app-card-body p-3 p-lg-4">
+        <h4 class="app-card-title mb-1">パートナー</h4>
+        <div class="stats-meta">
+          <% if @user_partner.blank? %>
+            <a class="btn app-btn-secondary" href="<%= enter_token_user_path %>">登録する</a>
+          <% else%>
+            <% @user_partner.each do |partner| %>
+              <% user = partner.follower %>
+              <h5 class="stats-type mb-1">パートナー: <%= user.name %></h5>
+              <%= link_to "削除", remove_partner_user_path(follower_id: user.id), data: { turbo_method: :delete }, class: "btn btn-danger btn-sm ms-2" %>
+            <% end %>
+          <% end %>
+        </div>
+      </div><!--//app-card-body-->
+    </div><!--//app-card-->
+  </div><!--//col-->
+
+  <div class="col-6 col-lg-3">
+    <div class="app-card app-card-m shadow-sm h-100">
+      <div class="app-card-body p-3 p-lg-4">
+        <h4 class="app-card-title mb-1">Myタバコ</h4>
+        <div class="stats-meta">
+          <% if @user.tobacco.blank? %>
+            <a class="app-card-link" href="<%= new_tobacco_path %>"></a>
+          <% else %>
+            一箱: <%= @user.tobacco.price %>円 <br>
+            一日: <%= @user.tobacco.baseline_cigarette %>本
+            <a class="app-card-link" href="<%= edit_tobacco_path %>"></a>
+          <% end %>
+        </div>
+      </div><!--//app-card-body-->
+    </div><!--//app-card-->
+  </div><!--//col-->
+</div>
+
+<div class="container">
+  <p>こちらの招待コードをパートナーの方の招待コード入力欄に入力してください。</p>
+</div>
+
+<!-- app/views/users/show.html.erb などのビューファイル -->
+<div class="invitation-code-display">
+  <input class="form-control" id="copyTarget" type="text" value="<%= current_user.token %>" readonly>
+  <i class="btn btn-outline-secondary far fa-copy copy-btn" type="button" onclick="copyToClipboard()"></i>
+</div>
+
+<script>
+  function copyToClipboard() {
+    var copyTarget = document.getElementById("copyTarget");
+    copyTarget.select();
+    document.execCommand("Copy");
+    alert('コピーしました');
+  }
+</script>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">喫煙記録</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with model: @smoke_record, url: smoke_records_path, local: true do |f| %>
+					<div class="form-group">
+						<%= f.label :smoke_date, "喫煙日" %>
+						<%= f.date_field :smoke_date, value: Date.today %>
+					</div>
+
+					<div class="form-group">
+						<%= f.label :smoked, "喫煙本数" %>
+						<%= f.number_field :smoked, class: "form-control" %>
+					</div>
+      
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+						<%= f.submit "記録する", class: "btn btn-primary" %>
+					</div>
+				<% end %>
+			</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="SendSetModal" tabindex="-1" aria-labelledby="SendSetModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="SendSetModalLabel">通知設定</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with model: @send_set do |f| %>
+					<div class="form-group">
+						<%= f.label :set_time, "通知時間" %>
+						<%= f.time_field :set_time %>
+					</div>
+
+					<div class="form-group">
+						<%= f.label :send_active, "通知設定" %>
+						<%= f.select :send_active, [["通知ON",true ],["通知OFF", false]], { include_blank: false, selected: true } %>
+					</div>
+      
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+						<%= f.submit "設定する", class: "btn btn-primary" %>
+					</div>
+				<% end %>
+			</div>
+    </div>
+  </div>
+</div>

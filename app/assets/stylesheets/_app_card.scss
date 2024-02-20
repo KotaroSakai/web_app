@@ -1,0 +1,92 @@
+.app-card {
+	background-color: white;
+	border-radius: 30px;
+	border: solid;
+	border-color: greenyellow;
+	transition:background-color 0.3s;
+	position: relative;
+}
+
+.app-card-m:hover {
+	background-color:#cce9ff;
+}
+
+.app-card-m {
+	cursor: pointer;
+  text-decoration: none;
+	text-align: center;
+}
+
+.app-card-title {
+	text-align: center;
+}
+
+.app-card-link {
+	position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.app-btn-secondary {
+	position: relative;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	margin: 0 auto;
+	max-width: 240px;
+	padding: 10px 25px;
+	color: #313131;
+	transition: 0.3s ease-in-out;
+	font-weight: 600;
+	background: greenyellow;
+	filter: drop-shadow(0px 2px 4px #ccc);
+	border-radius: 3px;
+}
+.app-btn-secondary:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 0 5px rgba(0, 0, 0, 0.10);
+}
+.app-btn-secondary:after {
+	content: '';
+	width: 5px;
+	height: 5px;
+	border-top: 3px solid #313131;
+	border-right: 3px solid #313131;
+	transform: rotate(45deg) translateY(-48%);
+	position: absolute;
+	top: 48%;
+	right: 20px;
+	border-radius: 1px;
+	transition: 0.3s ease-in-out;
+}
+
+/* post用 */
+.post-card {
+	background-color: white;
+	border: solid;
+	border-color: black;
+	text-align: center;
+}
+
+.card-title {
+	margin: 5px;
+}
+
+.list-inline {
+	border: solid;
+	border-color: black;
+	margin: 10px;
+}
+
+.post-card-text {
+	border: solid;
+	border-color: black;
+	margin: 10px;
+}
+
+.text-end {
+	margin-right: 5px;
+}

@@ -1,0 +1,73 @@
+<h2 class="app-page-title">グラフ・計算</h2>
+
+
+
+<div class="container-fluid">
+      <div class="row g-4 mb-4">
+        <div class="col-12 col-lg-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250 d-flex">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <strong class="d-inline-block mb-2 text-success">グラフ</strong>
+                    <div class="mb-1 text-muted" style="width: 100%;"><%= column_chart @data, height: '300px', width: "100%", xtitle: '日付', ytitle: '喫煙数' %></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card flex-md-row mb-4 box-shadow h-md-250">
+            <div class="card-body d-flex flex-column align-items-start">
+              <strong class="d-inline-block mb-2 text-success">喫煙記録</strong>
+              <h3 class="mb-0">
+                  <%= form_tag(smoke_records_path, method: :get) do %>
+                    <%= label_tag 'duration', '過去：' %>
+                    <%= select_tag 'duration', options_for_select([['1週間', '7'], ['1ヶ月', '30'], ['全期間', 'all']], params[:duration]), include_blank: '選択してください' %>
+                    <%= submit_tag '比較する' %>
+                  <% end %>   
+              </h3>
+              <h2>喫煙数: <%= @total_smoked %> 本</h2>
+              <h2>喫煙額: <%= @cost %> 円</h2>
+              <h2>節約金額: <%= @saved_cost %> 円</h2>
+              <h2>伸びた寿命: <%= @saved_life %></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+<!-- <%= column_chart @data, height: '400px', xtitle: '日付', ytitle: '喫煙数' %>
+<%= line_chart @data, height: '500px', library: { scales: { x: { type: 'time', time: { unit: 'day' } } } } %> -->
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  記録
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">喫煙記録</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with model: @smoke_record, url: smoke_records_path, local: true do |f| %>
+					<div class="form-group">
+						<%= f.label :smoke_date %>
+						<%= f.date_field :smoke_date, value: Date.today %>
+					</div>
+
+					<div class="form-group">
+						<%= f.label :smoked %>
+						<%= f.number_field :smoked, class: "form-control" %>
+					</div>
+      
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+						<%= f.submit "記録する", class: "btn btn-primary" %>
+					</div>
+				<% end %>
+			</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<h2>招待コードを入力してください</h2>
+<%= form_with(url: validata_token_user_path, method: :post) do |form| %>
+  <div class="form-group">
+    <%= form.label :token, 'トークン' %>
+    <%= form.text_field :token, class: 'form-control', placeholder: 'トークンを入力してください' %>
+  </div>
+  <%= form.submit '確認する', class: 'btn btn-primary' %>
+<% end %>
