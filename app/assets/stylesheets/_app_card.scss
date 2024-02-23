@@ -7,16 +7,6 @@
 	position: relative;
 }
 
-.app-card-m:hover {
-	background-color:#cce9ff;
-}
-
-.app-card-m {
-	cursor: pointer;
-  text-decoration: none;
-	text-align: center;
-}
-
 .app-card-title {
 	text-align: center;
 	font-size: 20px;
@@ -90,4 +80,11 @@
 
 .text-end {
 	margin-right: 5px;
+}
+
+/* グラフページ */
+
+.calculation-icon {
+	margin-right: 10px;
+	font-size: 2em;
 }

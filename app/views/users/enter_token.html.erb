@@ -1,8 +1,36 @@
-<h2>招待コードを入力してください</h2>
-<%= form_with(url: validata_token_user_path, method: :post) do |form| %>
-  <div class="form-group">
-    <%= form.label :token, 'トークン' %>
-    <%= form.text_field :token, class: 'form-control', placeholder: 'トークンを入力してください' %>
-  </div>
-  <%= form.submit '確認する', class: 'btn btn-primary' %>
-<% end %>
+<h2 class="app-page-title">パートナー登録</h2>
+<div class="container">
+  <% if current_user.role == "smoker"%>
+    <p class="text-center">こちらのユーザーコードをパートナーの方のコード入力欄に入力してください。</p>
+    <div class="col-mb-4 col-lg-4 mx-auto">
+      <!-- app/views/users/show.html.erb などのビューファイル -->
+      <div class="invitation-code-display mb-3 d-flex align-items-center">
+        <input class="form-control" id="copyTarget" type="text" value="<%= current_user.token %>" readonly>
+        <i class="btn btn-outline-secondary far fa-copy copy-btn" type="button" onclick="copyToClipboard()"></i>
+      </div>
+
+      <script>
+        function copyToClipboard() {
+          var copyTarget = document.getElementById("copyTarget");
+          copyTarget.select();
+          document.execCommand("Copy");
+          alert('コピーしました');
+        }
+      </script>
+    </div>
+
+  <% else %>
+    <p class="text-center">パートナーになるユーザーのコードを入力欄に入力してください。</p>
+    <div class="col-mb-4 col-lg-4 mx-auto">
+      <%= form_with(url: validata_token_user_path, method: :post) do |form| %>
+        <div class="form-group">
+          <div class="mb-3">
+            <%= form.label :token, 'ユーザーコード' %>
+            <%= form.text_field :token, class: 'form-control', placeholder: 'コードを入力してください' %>
+          </div>
+        </div>
+        <%= form.submit '確認する', class: 'btn btn-success' %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

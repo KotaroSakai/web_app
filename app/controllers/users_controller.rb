@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   def show
     @user = User.find(params[:id])
-    @user_partner = @user.follows
+    @user_partner = @user.followers
 
     @smoke_record = SmokeRecord.new
     @send_set = current_user.send_set
@@ -14,8 +14,10 @@ class UsersController < ApplicationController
   def validata_token
     user = User.find_by_token(params[:token])
     if user.present?
-      if current_user.following?(user)
-        redirect_to enter_token_user_path, alert: "すでにパートナーになっています"
+      if current_user == user
+        redirect_to enter_token_user_path, danger: "対応するユーザーがいません"
+      elsif current_user.following?(user)
+        redirect_to enter_token_user_path, danger: "すでにパートナーになっています"
     
       else
         unless UserPartner.exists?(follower_id: current_user.id, followed_id: user.id)
@@ -31,11 +33,9 @@ class UsersController < ApplicationController
   end
 
   def remove_partner
-    follower_id = params[:follower_id]
-    partner = User.find(follower_id)
-    byebug
-    UserPartner.find_by(follower_id: follower_id, followed_id: current_user.id).destroy
-    byebug
+    followed_id = params[:followed_id]
+    partner = User.find(followed_id)
+    UserPartner.find_by(follower_id: current_user.id, followed_id: followed_id).destroy
     redirect_to user_path(current_user), success: "関係を解除しました"
     
   end
