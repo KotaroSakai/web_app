@@ -1,6 +1,22 @@
 .app-page-title {
+	position: relative;
 	text-align: center;
 	margin-top: 45px;
 	margin-bottom: 30px;
 	font-weight: bold;
+}
+
+.app-page-title:before {
+  position: absolute;
+  bottom: -10px;
+  left: calc(50% - 30px);
+  width: 60px;
+  height: 5px;
+  content: '';
+  border-radius: 3px;
+  background: #186910;
+}
+
+.font-change {
+	font-family: Arial, sans-serif;
 }

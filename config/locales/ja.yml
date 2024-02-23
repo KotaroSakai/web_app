@@ -38,6 +38,9 @@ ja:
         roles:
           smoker: "喫煙者"
           partner: "パートナー"
+      tobacco:
+        price: "価格"
+        baseline_cigarette: "ベースの喫煙数"
     models:
       user: ユーザー
   devise:

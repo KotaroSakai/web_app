@@ -17,11 +17,11 @@ class SmokeRecordsController < ApplicationController
       @saved_life = life_calculation(duration)
       @data = case duration
       when "7"
-        current_user.smoke_records.group_by_week(:smoke_date, time_zone: 'Tokyo').sum(:smoked)
+        current_user.smoke_records.where("smoke_date >= ?", 1.week.ago).group_by_day(:smoke_date).sum(:smoked).to_a
       when '30'
-        current_user.smoke_records.group_by_month(:smoke_date, time_zone: 'Tokyo').sum(:smoked)
+        current_user.smoke_records.where("smoke_date >= ?", 1.month.ago).group_by_week(:smoke_date).sum(:smoked).to_a
       else
-        current_user.smoke_records.group_by_day(:smoke_date, time_zone: 'Tokyo').sum(:smoked)
+        current_user.smoke_records.where("smoke_date >= ?", 1.year.ago).group_by_month(:smoke_date).sum(:smoked).to_a
       end
     end
 
