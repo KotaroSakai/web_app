@@ -11,7 +11,7 @@
 <div class="container container-m">
   <div class="row">
     <div class="col-md-4">
-      <img src="assets/tobacco.jpg" alt="img" class="img-fluid rounded" width="200" height="300">
+      <%= image_tag "tobacco.jpg", alt: "img", class: "img-fluid rounded", width: "200", height: "300" %>
     </div>
     <div class="col-md-8">
       <h1>目的</h1>
@@ -27,7 +27,7 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col">
             <div class="card h-100">
-                <img src="assets/calculator.jpg" class="card-img-top" alt="...">
+                <%= image_tag "calculator.jpg", class: "card-img-top", alt: "..." %>
                 <div class="card-body">
                     <h5 class="card-title">計算</h5>
                     <p class="card-text">金額や本数を計算して表示します</p>
@@ -36,7 +36,7 @@
         </div>
         <div class="col">
             <div class="card h-100">
-                <img src="assets/graph.jpg" class="card-img-top" alt="...">
+                <%= image_tag "graph.jpg", class: "card-img-top", alt: "..." %>
                 <div class="card-body">
                     <h5 class="card-title">グラフ</h5>
                     <p class="card-text">グラフ表示させる事で分かやすく、頑張りを実感できると思います</p>
@@ -45,7 +45,7 @@
         </div>
         <div class="col">
             <div class="card h-100">
-                <img src="assets/send.jpg" class="card-img-top" alt="...">
+                <%= image_tag "send.jpg", class: "card-img-top", alt: "..." %>
                 <div class="card-body">
                     <h5 class="card-title">通知</h5>
                     <p class="card-text">LINEでログインしてもらう事で忘れていた時の通知などを行います</p>
