@@ -8,7 +8,7 @@ before_action :set_tabacco, only: [:show, :update, :destroy]
   def create
     @tobacco = current_user.build_tobacco(tobacco_params)
     if @tobacco.save
-      redirect_to tobacco_path(@tobacco)
+      redirect_to user_path(current_user), success: "設定が完了しました"
     else
       render :new
     end
