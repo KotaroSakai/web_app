@@ -12,12 +12,14 @@ namespace :line_notice do
       user_notification_time = Time.current.change(hour: user.send_set.set_time.hour, min: user.send_set.set_time.min, sec: 0)
 
       if Time.current >= user_notification_time
-        message = {
-          type: 'text',
-          text: "本日の喫煙記録がありません！"
-        }
-        response = client.push_message(user.uid, message)
-        p response
+        unless SendHistory.exists?(user_id: user.id, send_at: Date.today.in_time_zone('Tokyo').all_day) # 当日の通知履歴があるか確認
+          message = {
+            type: 'text',
+            text: "本日の喫煙記録がありません！"
+          }
+          response = client.push_message(user.uid, message)
+          p response
+        end
       end
     end
   end
