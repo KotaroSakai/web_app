@@ -6,7 +6,7 @@ namespace :line_notice do
       config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
     }
 		today = Date.today
-    users_without_smoking_records = User.joins(:send_set).where(send_set: { send_active: true}).where.not(id: SmokeRecord.where("DATE(smoke_date) = ?", Date.today).pluck(:user_id))
+    users_without_smoking_records = User.joins(:send_set).where(send_set: { send_active: true}).where(role: :smoker).where.not(id: SmokeRecord.where("DATE(smoke_date) = ?", Date.today).pluck(:user_id))
 
     users_without_smoking_records.each do |user|
       user_notification_time = Time.current.change(hour: user.send_set.set_time.hour, min: user.send_set.set_time.min, sec: 0)
