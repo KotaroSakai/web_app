@@ -1,12 +1,36 @@
 <h2 class="app-page-title">マイページ</h2>
-<div class="container">
-  <p>
-      <strong>ユーザー名</strong>
-      <%= @user.name %>
-      <strong>役割</strong>
-      <%= @user.role_i18n %>
-  </p>
+
+<div class="container mb-4">
+  <table class="table">
+      <thead>
+        <tr>
+          <th>ユーザー名</th>
+          <th>役割</th>
+          <th>通知</th>
+          <th>通知時間</th>
+          <th>パートナー</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th><%= @user.name %></th>
+          <td data-label="役割"><%= @user.role_i18n %></td>
+          <td data-label="通知"><%= @user.send_set.send_active %></td>
+          <td data-label="通知時間"><%= @user.send_set.set_time.strftime("%H時%M分") %></td>
+          <td data-label="パートナー">
+            <% if @user_partner.blank? %>
+              
+            <% else %>
+              <% @user_partner.each do |partner| %>
+                <% user = partner.follower %>
+                <%= user.name %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+  </table>
 </div>
+
 
 
 <div class="container">

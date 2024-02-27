@@ -18,6 +18,7 @@ namespace :line_notice do
             text: "本日の喫煙記録がありません！"
           }
           response = client.push_message(user.uid, message)
+          SendHistory.create(user_id: user.id, send_at: Date.today) # 通知履歴を作成
           p response
         end
       end

@@ -57,9 +57,29 @@
 /* post用 */
 .post-card {
 	background-color: white;
+	z-index: -1;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
 	border: solid;
 	border-color: black;
 	text-align: center;
+	position: relative;
+}
+
+.post-card::before {
+	content: ""; /* 伪要素には content を指定する必要がある */
+	position: absolute; /* 要素を絶対位置に配置 */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+  background-repeat: no-repeat;
+	background-position: center center;
+  background-image: url(../assets/dogeza.png);
+  background-size:cover;
+  opacity:0.2;
 }
 
 .card-title {
