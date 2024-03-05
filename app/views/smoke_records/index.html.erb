@@ -5,7 +5,7 @@
     <%= form_tag(smoke_records_path, method: :get) do %>
       <div class="form-group">
         <%= label_tag 'duration', '期間'%>
-        <%= select_tag 'duration', options_for_select([['1週間', '7'], ['1ヶ月', '30'], ['全期間', 'all']], params[:duration]), include_blank: '選択してください', class: "orm-select form-select-lg" %>
+        <%= select_tag 'duration', options_for_select([['1週間', '7'], ['1ヶ月', '30'], ['全期間', 'all']], params[:duration]), class: "orm-select form-select-lg" %>
         <%= submit_tag '比較する' %>
       </div>
     <% end %>   

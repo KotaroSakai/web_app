@@ -10,11 +10,18 @@
 					<% if user_signed_in? %>
 						<li>
 							<%= link_to user_path(current_user), class: "nav-link text-ligth" do%>
-								<i class="fas fa-users"></i> ユーザー 
+								<i class="fas fa-user"></i> ユーザー 
 							<% end %>
 						</li>
 						<li>
-							<%= link_to "反省文", posts_path, class: "nav-link text-light" %>
+							<%= link_to posts_path, class: "nav-link text-light" do%>
+								<i class="far fa-file-alt"></i> 反省文 
+							<% end %>
+						</li>
+						<li>
+							<%= link_to smoke_records_path, class: "nav-link text-ligth" do%>
+								<i class="fas fa-bar-chart"></i> グラフ
+							<% end %>
 						</li>
 						<li>
 							<%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link text-light" do %>

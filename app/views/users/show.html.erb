@@ -21,9 +21,15 @@
             <% if @user_partner.blank? %>
               
             <% else %>
-              <% @user_partner.each do |partner| %>
-                <% user = partner.follower %>
-                <%= user.name %>
+              <% if @user.role == "partner"%>
+                <% @user_partner.each do |partner| %>
+                  <%= User.find(partner.followed_id).name %>
+                <% end %>
+              <% else %>
+                <% @user_partner.each do |partner| %>
+                  <% user = partner.follower %>
+                  <%= user.name %>
+                <% end %>
               <% end %>
             <% end %>
           </td>
@@ -90,7 +96,7 @@
               <% else%>
                 <% @user_partner.each do |partner| %>
                 <div class="d-flex align-items-center justify-content-center">
-                  <h5 class="stats-type mb-1">パートナー: <%= User.find(partner.followed_id).name %></h5>
+                  <h5 class="stats-type mb-1">パートナー名: <%= User.find(partner.followed_id).name %></h5>
                   <%= link_to "解除", remove_partner_user_path(followed_id: partner.followed_id), data: { turbo_method: :delete }, class: "btn btn-danger btn-sm ms-2" %>
                 </div>
                 <% end %>

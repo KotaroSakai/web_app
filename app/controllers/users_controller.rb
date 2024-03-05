@@ -2,7 +2,12 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   def show
     @user = User.find(params[:id])
-    @user_partner = @user.followers
+
+    if @user.role == "partner"
+      @user_partner = @user.followers
+    else
+      @user_partner = @user.follows
+    end
 
     @smoke_record = SmokeRecord.new
     @send_set = current_user.send_set
