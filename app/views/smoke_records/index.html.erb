@@ -19,8 +19,8 @@
         <div class="col-12 col-lg-6">
             <div class="card flex-md-row mb-4 box-shadow h-md-250 d-flex h-100">
                 <div class="card-body d-flex flex-column align-items-start">
-                    <strong class="d-inline-block mb-2 text-success">グラフ</strong>
-                    <div class="mb-1 text-muted" style="width: 100%;"><%= column_chart @data, height: '350px', width: "100%", xtitle: '日付', ytitle: '喫煙数' %></div>
+                    <strong class="d-inline-block mb-2 text-success">喫煙本数</strong>
+                    <div class="mb-1 text-muted" style="width: 100%;"><%= column_chart @data, height: '350px', width: "100%", xtitle: '日付', ytitle: '喫煙数', suffix: "本" %></div>
                 </div>
             </div>
         </div>
@@ -34,6 +34,22 @@
               <h3 class="calculation-item mb-4"><i class="fas fa-heartbeat calculation-icon"></i>伸びた寿命: <span class="font-change"><%= @saved_life %></span></h3>
             </div>
           </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250 d-flex h-100">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <strong class="d-inline-block mb-2 text-success">喫煙額</strong>
+                    <div class="mb-1 text-muted" style="width: 100%;"><%= column_chart @price_data, height: '350px', width: "100%", xtitle: '日付', ytitle: '金額', suffix: "円" %></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250 d-flex h-100">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <strong class="d-inline-block mb-2 text-success">節約金額</strong>
+                    <div class="mb-1 text-muted" style="width: 100%;"><%= column_chart @saving_data, height: '350px', width: "100%", xtitle: '日付', ytitle: '金額', suffix: "円" %></div>
+                </div>
+            </div>
         </div>
       </div>
 </div>

@@ -38,8 +38,51 @@ class SmokeRecordsController < ApplicationController
         user.smoke_records.where("smoke_date >= ?", 1.year.ago).group_by_month(:smoke_date).sum(:smoked).to_a
       end
     end
+    one_price = price_of_one
+    base = current_user.tobacco.baseline_cigarette
+    if current_user.role == "smoker"
+      @price_data = case duration
+      when "7" 
+        current_user.smoke_records.where("smoke_date >= ?", 1.week.ago).group_by_day(:smoke_date).sum("smoked * #{one_price}").to_a
+      when "30"
+        current_user.smoke_records.where("smoke_date >= ?", 1.week.ago).group_by_week(:smoke_date).sum("smoked * #{one_price}").to_a
+      else
+        current_user.smoke_records.where("smoke_date >= ?", 1.week.ago).group_by_month(:smoke_date).sum("smoked * #{one_price}").to_a
+      end
+    else
+      partner_id = UserPartner.find_by(follower_id: current_user.id)
+      user = User.find(partner_id.followed_id)
+      @price_data = case duration
+      when "7" 
+        user.smoke_records.where("smoke_date >= ?", 1.week.ago).group_by_day(:smoke_date).sum("smoked * #{one_price}").to_a
+      when "30"
+        user.smoke_records.where("smoke_date >= ?", 1.week.ago).group_by_week(:smoke_date).sum("smoked * #{one_price}").to_a
+      else
+        user.smoke_records.where("smoke_date >= ?", 1.week.ago).group_by_month(:smoke_date).sum("smoked * #{one_price}").to_a
+      end
+    end
 
-    
+    if current_user.role == "smoker"
+      @saving_data = case duration 
+      when "7" 
+        current_user.smoke_records.where("smoke_date >= ?", 1.week.ago).group_by_day(:smoke_date).sum("COALESCE((#{base} - smoked), 0) * #{one_price}").to_a
+      when "30"
+        current_user.smoke_records.where("smoke_date >= ?", 1.week.ago).group_by_week(:smoke_date).sum("COALESCE((#{base} - smoked), 0) * #{one_price}").to_a
+      else
+        current_user.smoke_records.where("smoke_date >= ?", 1.week.ago).group_by_month(:smoke_date).sum("COALESCE((#{base} - smoked), 0) * #{one_price}").to_a
+      end
+    else
+      partner_id = UserPartner.find_by(follower_id: current_user.id)
+      user = User.find(partner_id.followed_id)
+      @saving_data = case duration
+      when "7" 
+        user.smoke_records.where("smoke_date >= ?", 1.week.ago).group_by_day(:smoke_date).sum("COALESCE((#{base} - smoked), 0) * #{one_price}").to_a
+      when "30"
+        user.smoke_records.where("smoke_date >= ?", 1.week.ago).group_by_week(:smoke_date).sum("COALESCE((#{base} - smoked), 0) * #{one_price}").to_a
+      else
+        user.smoke_records.where("smoke_date >= ?", 1.week.ago).group_by_month(:smoke_date).sum("COALESCE((#{base} - smoked), 0) * #{one_price}").to_a
+      end
+    end
   end
 
   def new
@@ -82,7 +125,7 @@ class SmokeRecordsController < ApplicationController
   def calculate_cost(total_smoked) #総喫煙数 X 一本の値段
     tobacco = set_tobacco
     price = set_tobacco.price
-    one_price = price / 20
+    one_price = price_of_one
     total_price = one_price * total_smoked
     total_price
   end
