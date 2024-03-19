@@ -1,43 +1,15 @@
 <h2 class="app-page-title">反省文一覧</h2>
 
-  <div class="container text-center mb-4">
-    <button type="button" class="btn btn-post" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        反省する
-      </button>
-  </div>
-
-  <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">反省文</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-				<%= form_with model: @post, local: true do |f| %>
-					<div class="modal-body">
-						<div class="form-group">
-							<%= f.label :title %>
-							<%= f.text_field :title, class: "form-control" %>
-					</div>
-					<div class="form-group">
-							<%= f.label :content %>
-							<%= f.text_area :content, class: "form-control" %>
-					</div>
-					<div class="modal-footer">
-        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-        		<%= f.submit "投稿", class: "btn btn-primary" %>
-      		</div>
-				<% end %>
-      </div>
-    </div>
-  </div>
+<div class="container text-center mb-4">
+  <button type="button" class="btn btn-post" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    反省する
+  </button>
 </div>
 
 
-<div class="container">
 
+
+<div class="container">
   <div class="col-9">
     <div class="row">
       <div class="col-12">
@@ -49,8 +21,35 @@
           <% end %>
         </div>
       </div>
+    </div>  
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">反省文</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+				<%= form_with model: @post, local: true do |f| %>
+					<div class="modal-body">
+
+					  <div class="form-group">
+							<%= f.label :content, "内容" %>
+							<%= f.text_area :content, class: "form-control" %>
+					  </div>
+
+					  <div class="modal-footer">
+        		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+        		  <%= f.submit "投稿", class: "btn btn-primary" %>
+      		  </div>
+          </div>
+				<% end %>
+      </div>
     </div>
-      
   </div>
 </div>
 

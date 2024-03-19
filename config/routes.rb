@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   root "top#index"
   get "privacy_policy", to: "top#privacy_policy"
   get "terms", to: "top#terms"
+  get "diagnosis", to: "top#diagnosis"
+  
+
   resources :users do
     member do
       get :enter_token

@@ -1,0 +1,125 @@
+<h2 class="app-page-title">診断ページ</h2>
+
+<div class="container mb-3">
+	<%= form_with do %>
+		<div class="form-group mb-3">
+			<h3>Q.1 起床後、何分で最初の喫煙をしますか？</h3>
+					<label>
+							<%= radio_button_tag :question_1, "3" %> 5分以内
+					</label>
+					<label>
+							<%= radio_button_tag :question_1, "2" %> 6~30分以内
+					</label>
+					<label>
+							<%= radio_button_tag :question_1, "1" %> 31~60分以内
+					</label>
+					<label>
+							<%= radio_button_tag :question_1, "0" %> 1時間以上
+					</label>
+		</div>
+
+		<div class="form-group mb-3">
+			<h3>Q.2 喫煙を禁じられている所に滞在するのはしんどいですか？</h3>
+					<label>
+							<%= radio_button_tag :question_2, "1" %> はい
+					</label>
+					<label>
+							<%= radio_button_tag :question_2, "0" %> いいえ
+					</label>
+		</div>
+
+		<div class="form-group mb-3">
+			<h3>Q.3 1日の喫煙の中で、どれが1番やめにくいですか？</h3>
+					<label>
+							<%= radio_button_tag :question_3, "1" %> 朝、最初の1本 
+					</label>
+					<label>
+							<%= radio_button_tag :question_3, "0" %> その他
+					</label>
+		</div>
+
+		<div class="form-group mb-3">
+			<h3>Q.4 1日に何本のタバコを吸いますか？</h3>
+				<label>
+					<%= radio_button_tag :question_4, "3" %> 31本以上 
+				</label>
+				<label>
+					<%= radio_button_tag :question_4, "2" %> 21~30本
+				</label>
+				<label>
+					<%= radio_button_tag :question_4, "1" %> 11~20本
+				</label>
+				<label>
+					<%= radio_button_tag :question_4, "0" %> 10本以下
+				</label>
+		</div>
+
+		<div class="form-group mb-3">
+			<h3>Q.5 他の時間より、起床後数時間に多くタバコを吸いますか？</h3>
+				<label>
+					<%= radio_button_tag :question_5, "1" %> はい 
+				</label>
+				<label>
+					<%= radio_button_tag :question_5, "0" %> いいえ
+				</label>
+		</div>
+
+		<div class="form-group mb-3">
+			<h3>Q.6 ほとんど1日中、床に伏している病気の時も喫煙しますか？</h3>
+				<label>
+							<%= radio_button_tag :question_6, "1" %> はい 
+				</label>
+				<label>
+							<%= radio_button_tag :question_6, "0" %> いいえ
+				</label>
+		</div>
+
+		<div class="text-center">
+			<%= submit_tag '診断する', class: "btn app-btn-secondary"  %>
+		</div>
+	<% end %>
+</div>
+
+<div class="container mb-3">
+	<div id="result_area" style="display: none;">
+	</div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var form = document.querySelector('form');
+    var resultArea = document.getElementById('result_area');
+
+    form.addEventListener('submit', function(event) {
+      // 質問の回答を取得
+			var question1Value = document.querySelector('input[name="question_1"]:checked').value;
+			var question2Value = document.querySelector('input[name="question_2"]:checked').value;
+    	var question3Value = document.querySelector('input[name="question_3"]:checked').value;
+    	var question4Value = document.querySelector('input[name="question_4"]:checked').value;
+    	var question5Value = document.querySelector('input[name="question_5"]:checked').value;
+    	var question6Value = document.querySelector('input[name="question_6"]:checked').value;
+      // 合計値を計算
+			var total = parseInt(question1Value) + parseInt(question2Value) + parseInt(question3Value) + parseInt(question4Value) + parseInt(question5Value) + parseInt(question6Value);	
+      
+			//合計値に応じて結果を判定
+			var result, advice;
+			if (total >= 7) {
+				result = "あなたの依存度は高いです"
+				advice = "ニコチン依存度が高いため、禁煙すると禁断症状が強めにでます。しかし、これらの症状ではニコチンが体から抜けさえすれば楽になります。症状の続く期間は個人差がありますが、2～4週間と考えてください。このつらい時期を乗り切るには医療機関に受診して禁煙治療を受けることを強くおすすめします。"
+			} else if (total >= 4) {
+				result = "あなたの依存度はやや高いです"
+				advice = "平均的なニコチン依存のレベルです。禁煙を始めて1週間くらいは、ニコチンの禁断症状に心身共に悩まされるかもしれません。もちろん個人差はありますが、ある程度の覚悟が必要です。成功のカギは、あなたに適した禁煙方法の選択にあります。禁煙補助剤を使って禁煙されることをおすすめします。"
+			} else {
+				result = "あなたの依存度は低いです"
+				advice = "一般にニコチン依存度が低い人ほど、禁煙は容易です。ニコチンの禁断症状は、それほどひどく出ません。その反面、「習慣性依存」が強いのかもしれません。習慣性依存はニコチン依存と違って、心理的なものであったり、「くせ」のようなものであるだけに、やっかいな面もあります。油断は禁物です。"
+			}
+
+      // 計算結果を結果表示エリアに表示する
+      resultArea.innerHTML = '<h2>診断の結果:</h2><p>' + result + '</p><h2>アドバイス:</h2><p>' + advice + '</p>';
+      resultArea.style.display = 'block';
+
+      // フォームのデフォルトの送信をキャンセルする
+      event.preventDefault();
+    });
+  });
+</script>
