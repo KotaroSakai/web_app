@@ -1,0 +1,2 @@
+class SendType < ApplicationRecord
+end

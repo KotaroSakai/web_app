@@ -12,13 +12,13 @@ namespace :line_notice do
       user_notification_time = Time.current.change(hour: user.send_set.set_time.hour, min: user.send_set.set_time.min, sec: 0)
 
       if Time.current >= user_notification_time
-        unless SendHistory.exists?(user_id: user.id, send_at: Date.today.in_time_zone('Tokyo').all_day) # 当日の通知履歴があるか確認
+        unless SendHistory.exists?(user_id: user.id, send_at: Date.today.in_time_zone('Tokyo').all_day, send_type_id: 1) # 当日の通知履歴があるか確認
           message = {
             type: 'text',
             text: "本日の喫煙記録がありません！"
           }
           response = client.push_message(user.uid, message)
-          SendHistory.create(user_id: user.id, send_at: Date.today) # 通知履歴を作成
+          SendHistory.create(user_id: user.id, send_at: Date.today, send_type_id: 1) # 通知履歴を作成
           p response
         end
       end
@@ -40,8 +40,7 @@ namespace :line_notice do
     partner_users.each do |user|
       user_notification_time = Time.current.change(hour: user.send_set.set_time.hour, min: user.send_set.set_time.min, sec: 0)
       if Time.current >= user_notification_time
-        unless SendHistory.exists?(user_id: user.id, send_at: Date.today.in_time_zone('Tokyo').all_day) # 当日の通知履歴があるか確認
-          puts Date.today
+        unless SendHistory.exists?(user_id: user.id, send_at: Date.today.in_time_zone('Tokyo').all_day, send_type_id: 1) # 当日の通知履歴があるか確認
           message = {
             type: 'text',
             text: "パートナーが本日の記録をしていません"
@@ -53,4 +52,33 @@ namespace :line_notice do
       end
     end
   end
+
+  desc "LINEBOT: Smoking Record Notification Oneweek" 
+  task :push_line_message_one_week => :environment do
+    client = Line::Bot::Client.new { |config|
+      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+    }
+    User.where.not(uid: nil, role: :partner).find_each do |user|
+      if user.smoking_for_one_week? && !SendHistory.exists?(user_id: user.id, send_type_id: 2)
+        message = {
+          type: 'text',
+          text: "おめでとうございます！1週間喫煙していませんね。これからもがんばってください！"
+        }
+        response = client.push_message(user.uid, message)
+        SendHistory.create(user_id: user.id, send_at: Time.now, send_type_id: 2) # 通知履歴を作成
+        p response
+      elsif user.smoking_for_one_month? && !SendHistory.exists?(user_id: user.id, send_type_id: 3)
+        message = {
+          type: 'text',
+          text: "おめでとうございます！1ヶ月間喫煙していませんね。これからもがんばってください！"
+        }
+        response = client.push_message(user.uid, message)
+        SendHistory.create(user_id: user.id, send_at: Time.now, send_type_id: 3) # 通知履歴を作成
+        p response
+      end
+    end
+  end
+
+
 end

@@ -72,5 +72,14 @@ class User < ApplicationRecord
     )
     send_set.save
   end
+
+  def no_smoking_for_one_week?
+    today = Date.today
+    (1..7).all? { |n| smoking_records.where(date: today - n.days).exists? && smoking_records.where(date: today - n.days).sum(:smoking_count) == 0 }
+  end
+
+  def no_smoking_for_one_month?
+
+  end
   
 end
